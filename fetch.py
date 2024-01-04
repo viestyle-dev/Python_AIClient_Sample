@@ -8,12 +8,12 @@ import payloads
 
 class Client:
     def __init__(self):
-        self.domain = os.getenv("DOMAIN_AI")
-        self.username = os.getenv("BASIC_USERNAME")
-        self.password = os.getenv("BASIC_AI_PASSWORD")
+        self.host = os.getenv("HOST_AI")
+        self.basic_user = os.getenv("BASIC_USER")
+        self.basic_pass = os.getenv("BASIC_AI_PASS")
 
     def _request(self, path, params, payload, method):
-        url = os.path.join(self.domain, path)
+        url = os.path.join(self.host, path)
         if method == "get":
             return self._get(url=url, params=params)
         elif method == "post":
@@ -23,7 +23,7 @@ class Client:
         return requests.get(
             headers=None,
             url=url,
-            auth=HTTPBasicAuth(username=self.username, password=self.password),
+            auth=HTTPBasicAuth(username=self.basic_user, password=self.basic_pass),
             params=params
         )
 
@@ -32,7 +32,7 @@ class Client:
             headers=None,
             url=url,
             json=payload,
-            auth=HTTPBasicAuth(username=self.username, password=self.password),
+            auth=HTTPBasicAuth(username=self.basic_user, password=self.basic_pass),
         )
 
     def inference(self, model_id):
